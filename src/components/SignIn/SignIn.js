@@ -11,7 +11,7 @@ export default function SignIn() {
             <Input placeholder = "Email"/>
             <Input placeholder = "Senha"/>
             <Button>Entrar</Button>
-            <Link to = {"/SignUp"}>
+            <Link to = {"/signup"}>
                 <Text>Primeira vez? Cadastre-se!</Text>
             </Link>
         </Container>
