@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import out from "../../img/out.png"
-
+import { Link } from "react-router-dom";
 
 export default function Home() {
 
@@ -14,14 +14,18 @@ export default function Home() {
                 <Text>Não há registros de entrada ou saída</Text>
             </Screen>
             <Boxes>
-                <Box>
-                    <BoxIcon src = ""/>
-                    <BoxText>Nova entrada</BoxText>
-                </Box>
-                <Box>
-                    <BoxIcon src = ""/>
-                    <BoxText>Nova saída</BoxText>
-                </Box>
+                <Link to = {"/entry"}>
+                    <Box>
+                        <BoxIcon src = ""/>
+                        <BoxText>Nova entrada</BoxText>
+                    </Box>
+                </Link>
+                <Link to = {"/exit"}>
+                    <Box>
+                        <BoxIcon src = ""/>
+                        <BoxText>Nova saída</BoxText>
+                    </Box>
+                </Link>
             </Boxes>
         </Container>
     )
