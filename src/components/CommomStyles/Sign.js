@@ -15,6 +15,12 @@ const Input = styled.input`
     margin-top: 10px;
     border: none;
     outline: none;
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 23px;
+    color: #000000;
+    padding-left: 10px;
 
     &&::placeholder {
         font-family: 'Raleway', sans-serif;
