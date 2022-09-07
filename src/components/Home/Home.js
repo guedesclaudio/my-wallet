@@ -1,14 +1,19 @@
 import styled from "styled-components";
 import out from "../../img/out.png"
-import { Link } from "react-router-dom";
+import UserContext from "../../contexts/UserContext.js"
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react"
 
 export default function Home() {
+
+    const {userData, config} = useContext(UserContext)
+    const navigate = useNavigate()
 
     return (
         <Container>
             <BoxWelcome>
-                <WelcomeText>Olá, Fulano</WelcomeText>
-                <img src = {out}/>
+                <WelcomeText>Olá, {userData.name}</WelcomeText>
+                <img src = {out} onClick = {() => navigate("/")}/>
             </BoxWelcome>
             <Screen>
                 <Text>Não há registros de entrada ou saída</Text>
