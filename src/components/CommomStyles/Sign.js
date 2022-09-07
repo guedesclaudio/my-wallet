@@ -10,7 +10,7 @@ const Logo = styled.h1`
 `
 const Input = styled.input`
     height: 58px;
-    width: 326px;
+    width: 100%;
     border-radius: 5px;
     margin-top: 10px;
     border: none;
@@ -21,6 +21,7 @@ const Input = styled.input`
     line-height: 23px;
     color: #000000;
     padding-left: 10px;
+    box-sizing: border-box;
 
     &&::placeholder {
         font-family: 'Raleway', sans-serif;
@@ -34,7 +35,7 @@ const Input = styled.input`
 const Button = styled.button`
     margin-top: 10px;
     height: 46px;
-    width: 326px;
+    width: 100%;
     border-radius: 5px;
     background-color: #A328D6;
     color: #FFFFFF;

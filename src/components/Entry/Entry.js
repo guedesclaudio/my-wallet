@@ -19,7 +19,7 @@ export default function Entry() {
         }
 
         try {
-            //await postEntry(form, config)
+            await postEntry(form, config)
 
         } catch (error) {
             console.log(error)

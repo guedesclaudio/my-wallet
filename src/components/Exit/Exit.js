@@ -19,7 +19,7 @@ export default function Exit() {
         }
 
         try {
-            await postExit(form)
+            await postExit(form, config)
 
         } catch (error) {
             console.log(error)

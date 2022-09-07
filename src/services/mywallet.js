@@ -13,12 +13,12 @@ function postSignUp(userRegistration) {
 }
 
 function postEntry(data, config) {
-    const promise = axios.post(`${baseURL}/entry`, data, config)
+    const promise = axios.post(`${baseURL}/entries`, data, config)
     return promise
 }
 
 function postExit(data, config) {
-    const promise = axios.post(`${baseURL}/exit`, data, config)
+    const promise = axios.post(`${baseURL}/exits`, data, config)
     return promise
 }
 
