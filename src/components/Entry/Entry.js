@@ -2,27 +2,31 @@ import styled from "styled-components";
 import { Input, Button } from "../CommomStyles/Sign.js"
 import { handleForm, postEntry } from "../../services/mywallet.js";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import UserContext from "../../contexts/UserContext.js";
 
 export default function Entry() {
 
     const [form, setForm] = useState({})
     const {config} = useContext(UserContext)
+    const navigate = useNavigate()
 
     async function sendEntry(event) {
         event.preventDefault()
-        console.log(form)
         const {money, description} = form
+        const correctMoney = money.split("").find(value => ",") ? money.replace(",", ".") : money
 
         if(isNaN(Number(money)) || !isNaN(Number(description))) {
             alert("Preencha os campos corretamente")
+            return
         }
 
         try {
-            await postEntry(form, config)
+            await postEntry({...form, money: correctMoney}, config)
+            navigate("/home")
 
         } catch (error) {
-            console.log(error)
+            alert(`ERROR ${error.response.status}`)
         }
     }
 

@@ -3,26 +3,31 @@ import {Input,Button} from "../CommomStyles/Sign.js"
 import { useState, useContext } from "react";
 import { handleForm, postExit } from "../../services/mywallet.js";
 import UserContext from "../../contexts/UserContext.js";
+import { useNavigate } from "react-router-dom";
 
 export default function Exit() {
 
     const [form, setForm] = useState({})
+    const [money, setMoney] = useState(0)
     const {config} = useContext(UserContext)
+    const navigate = useNavigate()
 
     async function sendExit(event) {
         event.preventDefault()
-        console.log(form, config)
         const {money, description} = form
+        const correctMoney = money.split("").find(value => ",") ? money.replace(",", ".") : money
 
-        if(isNaN(Number(money)) || !isNaN(Number(description))) {
+        if(isNaN(Number(correctMoney)) || !isNaN(Number(description))) {
             alert("Preencha os campos corretamente")
+            return
         }
 
         try {
-            await postExit(form, config)
+            await postExit({...form, money: correctMoney}, config)
+            navigate("/home")
 
         } catch (error) {
-            console.log(error)
+            alert(`ERROR ${error.response.status}`)
         }
     }
 

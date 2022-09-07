@@ -2,12 +2,44 @@ import styled from "styled-components";
 import out from "../../img/out.png"
 import UserContext from "../../contexts/UserContext.js"
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { getcashFlow } from "../../services/mywallet";
+
+
+function Move({money, description, type, date}) {
+
+    return (
+        <View>
+            <div>
+                <Date>{date}</Date>
+                <Description>{description}</Description>
+            </div>
+            <Money color = {type  === "entry" ? "#03AC00" : "#C70000" }>{money.replace(".", ",")}</Money>
+        </View>
+    )
+}
 
 export default function Home() {
 
     const {userData, config} = useContext(UserContext)
+    const [cashflow, setCashFlow] = useState([])
+    const [total, setTotal] = useState(0)
     const navigate = useNavigate()
+
+    useEffect(async () => {
+
+        try {
+            const response = await getcashFlow(config)
+            setCashFlow([...response.data[0].cashflow])
+            setTotal(response.data[1].total)
+            
+        } catch (error) {
+            console.log(error)
+        }
+
+    }, [])
+
+    
 
     return (
         <Container>
@@ -16,18 +48,31 @@ export default function Home() {
                 <img src = {out} onClick = {() => navigate("/")}/>
             </BoxWelcome>
             <Screen>
-                <Text>Não há registros de entrada ou saída</Text>
+                <Cash>
+                    {cashflow.length > 0 ? 
+                    cashflow.map((value,index) => 
+                    <Move key = {index} money = {value.money} description = {value.description} type = {value.type} date = {value.date}/>)
+                    :
+                    <Text>Não há registros de entrada ou saída</Text>
+                    }
+                </Cash>
+                {cashflow.length > 0 ? 
+                <Balance>
+                    <BalanceText>SALDO</BalanceText>
+                    <Total color = {total > 0 ? "#03AC00" : "#C70000"}>{total}</Total>
+                </Balance> : ""
+                }
             </Screen>
             <Boxes>
                 <Link to = {"/entry"}>
                     <Box>
-                        <BoxIcon src = ""/>
+                        <ion-icon name="add-circle-outline"></ion-icon>
                         <BoxText>Nova entrada</BoxText>
                     </Box>
                 </Link>
                 <Link to = {"/exit"}>
                     <Box>
-                        <BoxIcon src = ""/>
+                        <ion-icon name="remove-circle-outline"></ion-icon>
                         <BoxText>Nova saída</BoxText>
                     </Box>
                 </Link>
@@ -56,10 +101,13 @@ const WelcomeText = styled.h1`
 `
 const Screen = styled.div`
     margin-top: 20px;
-    height: 446px;
+    min-height: 446px;
     width: 326px;
     border-radius: 5px;
     background-color: #FFFFFF;
+`
+const Cash = styled.div`
+    min-height: 414px;
 `
 const Text = styled.p`
     padding-top: 60%;
@@ -69,6 +117,25 @@ const Text = styled.p`
     font-weight: 400;
     line-height: 23px;
     color: #868686;
+`
+const Balance = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
+const BalanceText = styled.p`
+    font-family: "Raleway";
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #000000;
+    padding-left: 10px;
+`
+const Total = styled(BalanceText)`
+    font-weight: 400;
+    padding-right: 10px;
+    color: ${props => props.color};
 `
 const Boxes = styled.div`
     margin-top: 15px;
@@ -82,9 +149,13 @@ const Box = styled.div`
     width: 156px;
     border-radius: 5px;
     background-color: #A328D6;
-`
-const BoxIcon = styled.img`
 
+    && ion-icon {
+        font-size: 26px;
+        color: white;
+        padding-left: 10px;
+        padding-top: 10px;
+    }
 `
 const BoxText = styled.p`
     font-family: "Raleway";
@@ -94,6 +165,36 @@ const BoxText = styled.p`
     font-weight: 700;
     line-height: 20px;
     color: #FFFFFF;
-    padding-top: 50px;
+    padding-top: 30px;
     padding-left: 10px;
+`
+const View = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+
+    && div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+`
+const Date = styled.p`
+    font-family: "Raleway";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    color: #C6C6C6;
+    margin-left: 10px;
+`
+const Description = styled(Date)`
+    color: #000000;
+    margin-left: 20px;
+`
+const Money = styled(Date)`
+    color: ${props => props.color};
+    padding-right: 10px;
+    margin-left: 0px;
 `

@@ -22,6 +22,11 @@ function postExit(data, config) {
     return promise
 }
 
+function getcashFlow(config) {
+    const promise = axios.get(`${baseURL}/cashflow`, config)
+    return promise
+}
+
 function handleForm ({name, value}, form, setForm) {
     setForm({
         ...form,
@@ -34,5 +39,6 @@ export {
     postSignUp,
     postEntry,
     postExit,
+    getcashFlow,
     handleForm
 }
