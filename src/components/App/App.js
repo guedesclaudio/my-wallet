@@ -24,7 +24,8 @@ export default function App() {
         <UserContext.Provider
         value = {{
             userData, setUserData, 
-            config, setConfig}}>
+            config, setConfig
+            }}>
             <BrowserRouter>
                 <Routes>
                     <Route path = "/" element = {<SignIn/>}/>

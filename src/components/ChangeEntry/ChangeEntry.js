@@ -1,28 +1,30 @@
 import styled from "styled-components";
 import { Input, Button } from "../CommomStyles/Sign.js"
-import { handleForm, postEntry } from "../../services/mywallet.js";
+import { handleForm, putMove } from "../../services/mywallet.js";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../contexts/UserContext.js";
 
-export default function Entry() {
-
+export default function ChangeEntry() {
+    
     const [form, setForm] = useState({})
     const {config} = useContext(UserContext)
     const navigate = useNavigate()
+    const idMove = JSON.parse(localStorage.getItem("id"))
 
-    async function sendEntry(event) {
+    async function putEntry(event) {
+
         event.preventDefault()
         const {money, description} = form
-        const correctMoney = money.split("").find(value => ",") ? money.replace(",", ".") : money
+        const correctMoney = money?.split("").find(value => ",") ? money?.replace(",", ".") : money
 
-        if(isNaN(Number(correctMoney)) || !isNaN(Number(description))) {
+        if((correctMoney && isNaN(Number(correctMoney))) || !isNaN(Number(description))) {
             alert("Preencha os campos corretamente")
             return
         }
-
+        
         try {
-            //await postEntry({...form, money: correctMoney}, config)
+            await putMove(idMove, {...form, money: correctMoney}, config)
             navigate("/home")
 
         } catch (error) {
@@ -42,11 +44,11 @@ export default function Entry() {
 
     return (
         <Container>
-            <form onSubmit = {sendEntry}>
+            <form onSubmit = {putEntry}>
                 <Text>Editar Entrada</Text>
-                <Input placeholder = "Valor" type = "text" name = "money" required onChange = {
+                <Input placeholder = "Valor" type = "text" name = "money" onChange = {
                     event => {handleForm({name: event.target.name, value: event.target.value}, form, setForm)}}/>
-                <Input placeholder = "Descrição" type = "text" name = "description" required onChange = {
+                <Input placeholder = "Descrição" type = "text" name = "description" onChange = {
                     event => {handleForm({name: event.target.name, value: event.target.value}, form, setForm)}}/>
                 <Button type = "submit">Editar entrada</Button>
             </form>

@@ -22,6 +22,11 @@ function Move({
     const navigate = useNavigate()
     const route = type === "entry" ? "changeentry" : "changeexit"
 
+    function editMove() {
+        localStorage.setItem("id", JSON.stringify(id))
+        navigate(`/${route}`)
+    }
+
     async function removeMove() {
         const responseUser = window.confirm("Deseja mesmo deletar?")
 
@@ -41,7 +46,7 @@ function Move({
         <View>
             <div>
                 <Date>{date}</Date>
-                <Description onClick = {() => navigate(`/${route}`)}>{description}</Description>
+                <Description onClick = {editMove}>{description}</Description>
             </div>
             <div> 
                 <Money color = {type  === "entry" ? "#03AC00" : "#C70000" }>{money.replace(".", ",")}</Money>
@@ -79,7 +84,8 @@ export default function Home() {
                     {cashflow.length > 0 ? 
                     cashflow.map((value,index) => 
                     <Move key = {index} money = {value.money} description = {value.description} 
-                    type = {value.type} date = {value.date}  id = {value._id} config = {config} callApi = {callApi} setCallApi = {setCallApi}/>)
+                    type = {value.type} date = {value.date}  id = {value._id} config = {config} 
+                    callApi = {callApi} setCallApi = {setCallApi}/>)
                     :
                     <Text>Não há registros de entrada ou saída</Text>
                     }

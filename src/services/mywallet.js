@@ -32,6 +32,11 @@ function deleteMove(id, config) {
     return promise
 }
 
+function putMove(id, data, config) {
+    const promise = axios.put(`${baseURL}/putmove/${id}`, data,  config)
+    return promise
+}
+
 function handleForm ({name, value}, form, setForm) {
     setForm({
         ...form,
@@ -46,5 +51,6 @@ export {
     postExit,
     getcashFlow,
     deleteMove,
+    putMove,
     handleForm
 }
