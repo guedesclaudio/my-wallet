@@ -7,7 +7,6 @@ import Boxes from "../Boxes/Boxes";
 import BoxWelcome from "../BoxWelcome/BoxWelcome";
 import Balance from "../Balance/Balance.js";
 
-
 function Move({
     money, 
     description, 
@@ -38,7 +37,17 @@ function Move({
             setCallApi(callApi+1)
             await deleteMove(id, config)
         } catch (error) {
-            console.log(error)
+            const status = error.response.status
+
+            if (status === 401) {
+                alert("Acesso não autorizado")
+                return
+            }
+            if (status === 404) {
+                alert("Movimentação não encontrada")
+                return
+            }
+            alert("Ops! Tivemos um problema e estamos trabalhando nisso.")
         } 
     }
 
@@ -61,7 +70,6 @@ export default function Home() {
     const {config} = useContext(UserContext)
     const [cashflow, setCashFlow] = useState([])
     const [total, setTotal] = useState(0)
-    //const navigate = useNavigate()
     const [callApi, setCallApi] = useState(0)
 
     useEffect(async () => {

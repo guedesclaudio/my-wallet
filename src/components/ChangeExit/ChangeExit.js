@@ -16,8 +16,8 @@ export default function ChangeExity() {
 
         event.preventDefault()
         const {money, description} = form
-        const correctMoney = money?.split("").find(value => ",") ? money?.replace(",", ".") : money
-
+        const correctMoney = money?.replace(",", ".")
+        
         if((correctMoney && isNaN(Number(correctMoney))) || !isNaN(Number(description))) {
             alert("Preencha os campos corretamente")
             return

@@ -15,7 +15,7 @@ export default function Exit() {
     async function sendExit(event) {
         event.preventDefault()
         const {money, description} = form
-        const correctMoney = money.split("").find(value => ",") ? money.replace(",", ".") : money
+        const correctMoney = money.replace(",", ".")
 
         if(isNaN(Number(correctMoney)) || !isNaN(Number(description))) {
             alert("Preencha os campos corretamente")
