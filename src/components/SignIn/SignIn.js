@@ -4,16 +4,24 @@ import { postSignIn, handleForm } from "../../services/mywallet.js"
 import { useContext, useState } from "react"
 import styled from "styled-components"
 import UserContext from "../../contexts/UserContext.js"
+import { ThreeDots } from "react-loader-spinner"
 
 export default function SignIn() {
 
     const {userData, setUserData, config, setConfig} = useContext(UserContext)
     const [form, setForm] = useState({})
     const navigate = useNavigate()
+    const [load, setLoad] = useState("Entrar")
 
-    async function userLogin (event) {
+    function userLogin (event) {
+
         event.preventDefault()
-        
+        setLoad(<ThreeDots color="#FFFFFF" height={80} width={80}/>)
+
+        setTimeout(sendLogin, 1000)
+    }
+
+    async function sendLogin() {
         try {
             const response = await postSignIn(form)
             const {token, name} = response.data
@@ -30,7 +38,7 @@ export default function SignIn() {
 
         } catch (error) {
             const status = error.response.status
-
+            setLoad("Entrar")
             if (status === 404 || status === 401) {
                 alert("Usuário ou senha inválidos.")
                 return
@@ -47,7 +55,7 @@ export default function SignIn() {
                 onChange = {event => handleForm({name: event.target.name, value: event.target.value}, form, setForm)}/>
                 <Input placeholder = "Senha" type = "password" name = "password" required
                 onChange = {event => handleForm({name: event.target.name, value: event.target.value}, form, setForm)}/>
-                <Button type = "submit">Entrar</Button>
+                <Button type = "submit">{load}</Button>
             </form>
             <Link to = {"/signup"}>
                 <Text>Primeira vez? Cadastre-se!</Text>

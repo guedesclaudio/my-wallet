@@ -44,6 +44,9 @@ const Button = styled.button`
     font-weight: 700;
     line-height: 23px;
     border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 
     &&:hover {
