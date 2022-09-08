@@ -27,6 +27,11 @@ function getcashFlow(config) {
     return promise
 }
 
+function deleteMove(id, config) {
+    const promise = axios.delete(`${baseURL}/deletemove/${id}`, config)
+    return promise
+}
+
 function handleForm ({name, value}, form, setForm) {
     setForm({
         ...form,
@@ -40,5 +45,6 @@ export {
     postEntry,
     postExit,
     getcashFlow,
+    deleteMove,
     handleForm
 }

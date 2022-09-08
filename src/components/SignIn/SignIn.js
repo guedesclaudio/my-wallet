@@ -29,7 +29,13 @@ export default function SignIn() {
             navigate("/home")
 
         } catch (error) {
-            alert("Usuário ou senha inválidos")
+            const status = error.response.status
+
+            if (status === 404 || status === 401) {
+                alert("Usuário ou senha inválidos.")
+                return
+            }
+            alert("Ops! Tivemos um problema e estamos trabalhando nisso.")
         }
     }
 

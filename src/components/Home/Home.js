@@ -3,18 +3,47 @@ import out from "../../img/out.png"
 import UserContext from "../../contexts/UserContext.js"
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react"
-import { getcashFlow } from "../../services/mywallet";
+import { getcashFlow, deleteMove } from "../../services/mywallet";
 
 
-function Move({money, description, type, date}) {
+function Move({
+    money, 
+    description, 
+    type, 
+    date, 
+    config, 
+    id,
+    callApi,
+    setCallApi
+}) {
+
+    console.log(callApi)
+
+    async function removeMove() {
+        const responseUser = window.confirm("Deseja mesmo deletar?")
+
+        if(!responseUser) {
+            return
+        }
+        
+        try {
+            setCallApi(callApi+1)
+            await deleteMove(id, config)
+        } catch (error) {
+            console.log(error)
+        } 
+    }
 
     return (
         <View>
-            <div>
+            <div className = "view-left">
                 <Date>{date}</Date>
                 <Description>{description}</Description>
             </div>
-            <Money color = {type  === "entry" ? "#03AC00" : "#C70000" }>{money.replace(".", ",")}</Money>
+            <div className = "view-right"> 
+                <Money color = {type  === "entry" ? "#03AC00" : "#C70000" }>{money.replace(".", ",")}</Money>
+                <ion-icon name="close-outline" onClick = {removeMove}></ion-icon>
+            </div>
         </View>
     )
 }
@@ -25,19 +54,19 @@ export default function Home() {
     const [cashflow, setCashFlow] = useState([])
     const [total, setTotal] = useState(0)
     const navigate = useNavigate()
+    const [callApi, setCallApi] = useState(0)
 
     useEffect(async () => {
 
         try {
             const response = await getcashFlow(config)
-            setCashFlow([...response.data[0].cashflow])
+            setCashFlow([...response.data[0].cashflow.reverse()])
             setTotal(response.data[1].total)
             
         } catch (error) {
             console.log(error)
         }
-
-    }, [])
+    }, [callApi])
 
     
 
@@ -51,7 +80,8 @@ export default function Home() {
                 <Cash>
                     {cashflow.length > 0 ? 
                     cashflow.map((value,index) => 
-                    <Move key = {index} money = {value.money} description = {value.description} type = {value.type} date = {value.date}/>)
+                    <Move key = {index} money = {value.money} description = {value.description} 
+                    type = {value.type} date = {value.date}  id = {value._id} config = {config} callApi = {callApi} setCallApi = {setCallApi}/>)
                     :
                     <Text>Não há registros de entrada ou saída</Text>
                     }
@@ -175,10 +205,21 @@ const View = styled.div`
     align-items: center;
     padding-top: 10px;
 
-    && div {
+    && .view-left {
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+
+    && .view-right {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    && ion-icon {
+        color: #C6C6C6;
+        padding-right: 4px;;
     }
 `
 const Date = styled.p`
