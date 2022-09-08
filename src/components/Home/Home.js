@@ -142,7 +142,8 @@ const View = styled.div`
     }
     && ion-icon {
         color: #C6C6C6;
-        padding-right: 4px;;
+        padding-right: 4px;
+        cursor: pointer;
     }
 `
 const Date = styled.p`
@@ -156,6 +157,7 @@ const Date = styled.p`
 const Description = styled(Date)`
     color: #000000;
     margin-left: 20px;
+    cursor: pointer;
 `
 const Money = styled(Date)`
     color: ${props => props.color};

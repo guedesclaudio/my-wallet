@@ -22,6 +22,11 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    && img:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
 `
 const WelcomeText = styled.h1`
     font-family: "Raleway";

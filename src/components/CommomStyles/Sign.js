@@ -44,6 +44,11 @@ const Button = styled.button`
     font-weight: 700;
     line-height: 23px;
     border: none;
+    cursor: pointer;
+
+    &&:hover {
+        filter: brightness(1.1);
+    }
 `
 const Text = styled.p`
     font-family: 'Raleway', sans-serif;

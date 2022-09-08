@@ -40,6 +40,11 @@ const Box = styled.div`
         padding-left: 10px;
         padding-top: 10px;
     }
+
+    &&:hover {
+        cursor: pointer;
+        filter: brightness(1.1);
+    }
 `
 const BoxText = styled.p`
     font-family: "Raleway";
