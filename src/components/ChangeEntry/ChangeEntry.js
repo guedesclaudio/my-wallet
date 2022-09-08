@@ -22,7 +22,7 @@ export default function Entry() {
         }
 
         try {
-            await postEntry({...form, money: correctMoney}, config)
+            //await postEntry({...form, money: correctMoney}, config)
             navigate("/home")
 
         } catch (error) {
@@ -43,12 +43,12 @@ export default function Entry() {
     return (
         <Container>
             <form onSubmit = {sendEntry}>
-                <Text>Nova Entrada</Text>
+                <Text>Editar Entrada</Text>
                 <Input placeholder = "Valor" type = "text" name = "money" required onChange = {
                     event => {handleForm({name: event.target.name, value: event.target.value}, form, setForm)}}/>
                 <Input placeholder = "Descrição" type = "text" name = "description" required onChange = {
                     event => {handleForm({name: event.target.name, value: event.target.value}, form, setForm)}}/>
-                <Button type = "submit">Salvar entrada</Button>
+                <Button type = "submit">Editar entrada</Button>
             </form>
         </Container>
     )

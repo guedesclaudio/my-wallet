@@ -1,9 +1,11 @@
 import styled from "styled-components";
-import out from "../../img/out.png"
 import UserContext from "../../contexts/UserContext.js"
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react"
 import { getcashFlow, deleteMove } from "../../services/mywallet";
+import Boxes from "../Boxes/Boxes";
+import BoxWelcome from "../BoxWelcome/BoxWelcome";
+import Balance from "../Balance/Balance.js";
 
 
 function Move({
@@ -17,7 +19,8 @@ function Move({
     setCallApi
 }) {
 
-    console.log(callApi)
+    const navigate = useNavigate()
+    const route = type === "entry" ? "changeentry" : "changeexit"
 
     async function removeMove() {
         const responseUser = window.confirm("Deseja mesmo deletar?")
@@ -36,11 +39,11 @@ function Move({
 
     return (
         <View>
-            <div className = "view-left">
+            <div>
                 <Date>{date}</Date>
-                <Description>{description}</Description>
+                <Description onClick = {() => navigate(`/${route}`)}>{description}</Description>
             </div>
-            <div className = "view-right"> 
+            <div> 
                 <Money color = {type  === "entry" ? "#03AC00" : "#C70000" }>{money.replace(".", ",")}</Money>
                 <ion-icon name="close-outline" onClick = {removeMove}></ion-icon>
             </div>
@@ -50,10 +53,10 @@ function Move({
 
 export default function Home() {
 
-    const {userData, config} = useContext(UserContext)
+    const {config} = useContext(UserContext)
     const [cashflow, setCashFlow] = useState([])
     const [total, setTotal] = useState(0)
-    const navigate = useNavigate()
+    //const navigate = useNavigate()
     const [callApi, setCallApi] = useState(0)
 
     useEffect(async () => {
@@ -68,14 +71,9 @@ export default function Home() {
         }
     }, [callApi])
 
-    
-
     return (
         <Container>
-            <BoxWelcome>
-                <WelcomeText>Olá, {userData.name}</WelcomeText>
-                <img src = {out} onClick = {() => navigate("/")}/>
-            </BoxWelcome>
+            <BoxWelcome/>
             <Screen>
                 <Cash>
                     {cashflow.length > 0 ? 
@@ -86,27 +84,9 @@ export default function Home() {
                     <Text>Não há registros de entrada ou saída</Text>
                     }
                 </Cash>
-                {cashflow.length > 0 ? 
-                <Balance>
-                    <BalanceText>SALDO</BalanceText>
-                    <Total color = {total > 0 ? "#03AC00" : "#C70000"}>{total}</Total>
-                </Balance> : ""
-                }
+                {cashflow.length > 0 ? <Balance total = {total}/> : ""}
             </Screen>
-            <Boxes>
-                <Link to = {"/entry"}>
-                    <Box>
-                        <ion-icon name="add-circle-outline"></ion-icon>
-                        <BoxText>Nova entrada</BoxText>
-                    </Box>
-                </Link>
-                <Link to = {"/exit"}>
-                    <Box>
-                        <ion-icon name="remove-circle-outline"></ion-icon>
-                        <BoxText>Nova saída</BoxText>
-                    </Box>
-                </Link>
-            </Boxes>
+            <Boxes/>
         </Container>
     )
 }
@@ -114,20 +94,6 @@ export default function Home() {
 const Container = styled.div`
     margin: 20px auto;
     width: 327px;
-`
-const BoxWelcome = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`
-const WelcomeText = styled.h1`
-    font-family: "Raleway";
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 31px;
-    text-align: left;
-    color: #FFFFFF;
 `
 const Screen = styled.div`
     margin-top: 20px;
@@ -148,56 +114,6 @@ const Text = styled.p`
     line-height: 23px;
     color: #868686;
 `
-const Balance = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`
-const BalanceText = styled.p`
-    font-family: "Raleway";
-    font-size: 17px;
-    font-weight: 700;
-    line-height: 20px;
-    color: #000000;
-    padding-left: 10px;
-`
-const Total = styled(BalanceText)`
-    font-weight: 400;
-    padding-right: 10px;
-    color: ${props => props.color};
-`
-const Boxes = styled.div`
-    margin-top: 15px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`
-const Box = styled.div`
-    height: 114px;
-    width: 156px;
-    border-radius: 5px;
-    background-color: #A328D6;
-
-    && ion-icon {
-        font-size: 26px;
-        color: white;
-        padding-left: 10px;
-        padding-top: 10px;
-    }
-`
-const BoxText = styled.p`
-    font-family: "Raleway";
-    font-size: 17px;
-    width: 64px;
-    height: 40px;
-    font-weight: 700;
-    line-height: 20px;
-    color: #FFFFFF;
-    padding-top: 30px;
-    padding-left: 10px;
-`
 const View = styled.div`
     width: 100%;
     display: flex;
@@ -205,18 +121,11 @@ const View = styled.div`
     align-items: center;
     padding-top: 10px;
 
-    && .view-left {
+    && div {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-
-    && .view-right {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
     && ion-icon {
         color: #C6C6C6;
         padding-right: 4px;;

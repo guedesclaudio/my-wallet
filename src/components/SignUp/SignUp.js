@@ -27,7 +27,17 @@ export default function SignUp() {
             await postSignUp(form)
             navigate("/")
         } catch (error) {
-            alert("Já existe um usuário com esse email!")
+            const status = error.response.status
+
+            if (status === 409) {
+                alert("Já existe um usuário com esse email")
+                return
+            }
+            if (status === 422) {
+                alert("Preencha os campos corretamente")
+                return
+            }
+            alert("Ops! Tivemos um problema e estamos trabalhando nisso.")
         }
     }
 

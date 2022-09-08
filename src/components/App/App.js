@@ -5,6 +5,8 @@ import SignUp from "../SignUp/SignUp.js"
 import Home from "../Home/Home.js"
 import Entry from "../Entry/Entry.js"
 import Exit from "../Exit/Exit.js"
+import ChangeEntry from "../ChangeEntry/ChangeEntry.js"
+import ChangeExit from "../ChangeExit/ChangeExit.js"
 import UserContext from "../../contexts/UserContext"
 import "../reset.css"
 
@@ -30,6 +32,8 @@ export default function App() {
                     <Route path = "/home" element = {<Home/>}/>
                     <Route path = "/entry" element = {<Entry/>}/>
                     <Route path = "/exit" element = {<Exit/>}/>
+                    <Route path = "/changeentry" element = {<ChangeEntry/>}/>
+                    <Route path = "/changeexit" element = {<ChangeExit/>}/>
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>

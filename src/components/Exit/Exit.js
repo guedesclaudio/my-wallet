@@ -27,7 +27,17 @@ export default function Exit() {
             navigate("/home")
 
         } catch (error) {
-            alert(`ERROR ${error.response.status}`)
+            const status = error.response.status
+
+            if (status === 401) {
+                alert("Acesso não autorizado.")
+                return
+            }
+            if (status === 422) {
+                alert("Preencha os campos corretamente.")
+                return
+            }
+            alert("Ops! Tivemos um problema e estamos trabalhando nisso.")
         }
     }
 
