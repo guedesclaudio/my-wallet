@@ -12,12 +12,15 @@ export default function SignIn() {
     const [form, setForm] = useState({})
     const navigate = useNavigate()
     const [load, setLoad] = useState("Entrar")
+    const [disabled, setDisabled] = useState("")
+    const [background, setBackground] = useState("#FFFFFF")
 
     function userLogin (event) {
 
         event.preventDefault()
         setLoad(<ThreeDots color="#FFFFFF" height={80} width={80}/>)
-
+        setDisabled("disabled")
+        setBackground("#A328D6")
         setTimeout(sendLogin, 1000)
     }
 
@@ -37,8 +40,12 @@ export default function SignIn() {
             navigate("/home")
 
         } catch (error) {
+
             const status = error.response.status
             setLoad("Entrar")
+            setDisabled("")
+            setBackground("#FFFFFF")
+            
             if (status === 404 || status === 401) {
                 alert("Usuário ou senha inválidos.")
                 return
@@ -51,11 +58,11 @@ export default function SignIn() {
         <Container>
             <Logo>MyWallet</Logo>
             <form onSubmit = {userLogin}>
-                <Input placeholder = "Email" type = "email" name = "email" required
+                <Input placeholder = "Email" type = "email" name = "email" required disabled = {disabled} background = {background}
                 onChange = {event => handleForm({name: event.target.name, value: event.target.value}, form, setForm)}/>
-                <Input placeholder = "Senha" type = "password" name = "password" required
+                <Input placeholder = "Senha" type = "password" name = "password" required disabled = {disabled} background = {background}
                 onChange = {event => handleForm({name: event.target.name, value: event.target.value}, form, setForm)}/>
-                <Button type = "submit">{load}</Button>
+                <Button type = "submit" disabled = {disabled}>{load}</Button>
             </form>
             <Link to = {"/signup"}>
                 <Text>Primeira vez? Cadastre-se!</Text>

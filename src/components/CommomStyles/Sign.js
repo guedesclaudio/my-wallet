@@ -22,6 +22,7 @@ const Input = styled.input`
     color: #000000;
     padding-left: 10px;
     box-sizing: border-box;
+    background-color: ${props => props.background};
 
     &&::placeholder {
         font-family: 'Raleway', sans-serif;
