@@ -14,13 +14,12 @@ export default function SignIn() {
     const [load, setLoad] = useState("Entrar")
     const [disabled, setDisabled] = useState("")
     const [background, setBackground] = useState("#FFFFFF")
+    const [color, setColor] = useState("#000000")
 
     function userLogin (event) {
 
         event.preventDefault()
-        setLoad(<ThreeDots color="#FFFFFF" height={80} width={80}/>)
-        setDisabled("disabled")
-        setBackground("#A328D6")
+        disabledForm()
         setTimeout(sendLogin, 1000)
     }
 
@@ -42,10 +41,8 @@ export default function SignIn() {
         } catch (error) {
 
             const status = error.response.status
-            setLoad("Entrar")
-            setDisabled("")
-            setBackground("#FFFFFF")
-            
+            enabledForm()
+
             if (status === 404 || status === 401) {
                 alert("Usuário ou senha inválidos.")
                 return
@@ -54,13 +51,27 @@ export default function SignIn() {
         }
     }
 
+    function disabledForm() {
+        setLoad(<ThreeDots color="#FFFFFF" height={80} width={80}/>)
+        setDisabled("disabled")
+        setBackground("#A328D6")
+        setColor("#FFFFFF")
+    }
+
+    function enabledForm() {
+        setLoad("Entrar")
+        setDisabled("")
+        setBackground("#FFFFFF")
+        setColor("#000000")
+    }
+
     return (
         <Container>
             <Logo>MyWallet</Logo>
             <form onSubmit = {userLogin}>
-                <Input placeholder = "Email" type = "email" name = "email" required disabled = {disabled} background = {background}
+                <Input placeholder = "Email" type = "email" name = "email" required disabled = {disabled} background = {background} color = {color}
                 onChange = {event => handleForm({name: event.target.name, value: event.target.value}, form, setForm)}/>
-                <Input placeholder = "Senha" type = "password" name = "password" required disabled = {disabled} background = {background}
+                <Input placeholder = "Senha" type = "password" name = "password" required disabled = {disabled} background = {background} color = {color}
                 onChange = {event => handleForm({name: event.target.name, value: event.target.value}, form, setForm)}/>
                 <Button type = "submit" disabled = {disabled}>{load}</Button>
             </form>

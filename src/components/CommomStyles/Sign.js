@@ -19,7 +19,7 @@ const Input = styled.input`
     font-size: 20px;
     font-weight: 400;
     line-height: 23px;
-    color: #000000;
+    color: ${props => props.color};
     padding-left: 10px;
     box-sizing: border-box;
     background-color: ${props => props.background};
