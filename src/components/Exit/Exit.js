@@ -37,7 +37,7 @@ export default function Exit() {
                 <Text>Nova Saída</Text>
                 <Input placeholder = "Valor" type = "text" name = "money" required onChange = {
                 event => {handleForm({name: event.target.name, value: event.target.value}, form, setForm)}}/>
-                <Input placeholder = "Descrição" type = "text" name = "description" onChange = {
+                <Input placeholder = "Descrição" type = "text" name = "description" required onChange = {
                 event => {handleForm({name: event.target.name, value: event.target.value}, form, setForm)}}/>
                 <Button type = "submit">Salvar saída</Button>
             </form>

@@ -11,7 +11,12 @@ export default function SignUp() {
 
     async function userRegistration (event) {
         event.preventDefault()
-        const {password, confirmPassword} = form
+        const {name, password, confirmPassword} = form
+
+        if(!isNaN(Number(name))) {
+            alert("Digite um nome válido")
+            return
+        }
 
         if (password !== confirmPassword) {
             alert("Confirme sua senha corretamente")
@@ -22,7 +27,7 @@ export default function SignUp() {
             await postSignUp(form)
             navigate("/")
         } catch (error) {
-            console.log(error)
+            alert("Já existe um usuário com esse email!")
         }
     }
 

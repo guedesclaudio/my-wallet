@@ -16,7 +16,7 @@ export default function Entry() {
         const {money, description} = form
         const correctMoney = money.split("").find(value => ",") ? money.replace(",", ".") : money
 
-        if(isNaN(Number(money)) || !isNaN(Number(description))) {
+        if(isNaN(Number(correctMoney)) || !isNaN(Number(description))) {
             alert("Preencha os campos corretamente")
             return
         }
@@ -36,7 +36,7 @@ export default function Entry() {
                 <Text>Nova Entrada</Text>
                 <Input placeholder = "Valor" type = "text" name = "money" required onChange = {
                     event => {handleForm({name: event.target.name, value: event.target.value}, form, setForm)}}/>
-                <Input placeholder = "Descrição" type = "text" name = "description" onChange = {
+                <Input placeholder = "Descrição" type = "text" name = "description" required onChange = {
                     event => {handleForm({name: event.target.name, value: event.target.value}, form, setForm)}}/>
                 <Button type = "submit">Salvar entrada</Button>
             </form>
