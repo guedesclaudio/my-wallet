@@ -33,7 +33,7 @@ export default function Entry() {
                 return
             }
             if (status === 422) {
-                alert("Preencha os campos corretamente.")
+                alert("O valor deve ser válido e a descrição deve conter no máximo 20 caracteres")
                 return
             }
             alert("Ops! Tivemos um problema e estamos trabalhando nisso.")

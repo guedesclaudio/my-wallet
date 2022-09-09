@@ -157,6 +157,8 @@ const Date = styled.p`
 const Description = styled(Date)`
     color: #000000;
     margin-left: 20px;
+    width: 100px;
+    overflow-wrap: break-word;
     cursor: pointer;
 `
 const Money = styled(Date)`
