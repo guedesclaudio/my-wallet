@@ -5,7 +5,7 @@ export default function Balance ({total}) {
     return (
         <Container>
             <BalanceText>SALDO</BalanceText>
-            <Total color = {total > 0 ? "#03AC00" : "#C70000"}>{total}</Total>
+            <Total color = {total > 0 ? "#03AC00" : "#C70000"}>{total.toString().replace(".",",")}</Total>
         </Container>
     )
 }
@@ -13,8 +13,10 @@ export default function Balance ({total}) {
 const Container = styled.div`
     width: 100%;
     display: flex;
+    height: 30px;
     justify-content: space-between;
     align-items: center;
+    padding-top: 10px;
 `
 const BalanceText = styled.p`
     font-family: "Raleway";

@@ -87,7 +87,7 @@ export default function Home() {
     return (
         <Container>
             <BoxWelcome/>
-            <Screen>
+            <Screen >
                 <Cash>
                     {cashflow.length > 0 ? 
                     cashflow.map((value,index) => 
@@ -111,13 +111,14 @@ const Container = styled.div`
 `
 const Screen = styled.div`
     margin-top: 20px;
-    min-height: 446px;
+    height: 446px;
     width: 326px;
     border-radius: 5px;
     background-color: #FFFFFF;
 `
 const Cash = styled.div`
-    min-height: 414px;
+    height: 404px;
+    overflow-y: scroll;
 `
 const Text = styled.p`
     padding-top: 60%;
