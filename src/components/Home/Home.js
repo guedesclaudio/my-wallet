@@ -54,7 +54,7 @@ function Move({
     return (
         <View>
             <div>
-                <Date>{date}</Date>
+                <TextDate>{date}</TextDate>
                 <Description onClick = {editMove}>{description}</Description>
             </div>
             <div> 
@@ -147,7 +147,7 @@ const View = styled.div`
         cursor: pointer;
     }
 `
-const Date = styled.p`
+const TextDate = styled.p`
     font-family: "Raleway";
     font-size: 16px;
     font-weight: 400;
