@@ -20,7 +20,7 @@ export default function ChangeExity() {
         
         if((correctMoney && isNaN(Number(correctMoney))) || !isNaN(Number(description))) {
             alert("Preencha os campos corretamente")
-            setForm({money: "", description: ""})
+            clearInputs(money, description)
             return
         }
 
@@ -33,15 +33,27 @@ export default function ChangeExity() {
 
             if (status === 401) {
                 alert("Acesso não autorizado.")
-                setForm({money: "", description: ""})
+                clearInputs(money, description)
                 return
             }
             if (status === 422) {
                 alert("O valor deve ser válido e a descrição deve conter no máximo 20 caracteres")
-                setForm({money: "", description: ""})
+                clearInputs(money, description)
                 return
             }
             alert("Ops! Tivemos um problema e estamos trabalhando nisso.")
+        }
+    }
+
+    function clearInputs(money, description) {
+        if (money && description) {
+            setForm({money: "", description: ""})
+        }
+        if(money && !description) {
+            setForm({money: ""})
+        }
+        if(!money && description) {
+            setForm({description: ""})
         }
     }
 
