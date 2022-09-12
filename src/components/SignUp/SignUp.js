@@ -48,7 +48,7 @@ export default function SignUp() {
                 return
             }
             if (status === 422) {
-                alert("Preencha os campos corretamente")
+                alert("Preencha os campos corretamente. O nome deve conter no máximo 15 caracteres")
                 return
             }
             alert("Ops! Tivemos um problema e estamos trabalhando nisso.")
