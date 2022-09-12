@@ -12,7 +12,7 @@ export default function BoxWelcome () {
     return (
         <Container>
             <WelcomeText>Olá, {userData.name}</WelcomeText>
-            <img src = {out} onClick = {() => navigate("/")}/>
+            <img src = {out} alt = "icone" onClick = {() => navigate("/")}/>
         </Container>
     )
 }

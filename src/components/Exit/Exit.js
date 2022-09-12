@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 export default function Exit() {
 
     const [form, setForm] = useState({})
-    const [money, setMoney] = useState(0)
     const {config} = useContext(UserContext)
     const navigate = useNavigate()
 

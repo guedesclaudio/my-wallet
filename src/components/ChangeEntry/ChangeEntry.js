@@ -20,6 +20,7 @@ export default function ChangeEntry() {
 
         if((correctMoney && isNaN(Number(correctMoney))) || !isNaN(Number(description))) {
             alert("Preencha os campos corretamente")
+            setForm({money: "", description: ""})
             return
         }
         
@@ -32,10 +33,12 @@ export default function ChangeEntry() {
 
             if (status === 401) {
                 alert("Acesso não autorizado.")
+                setForm({money: "", description: ""})
                 return
             }
             if (status === 422) {
                 alert("O valor deve ser válido e a descrição deve conter no máximo 20 caracteres")
+                setForm({money: "", description: ""})
                 return
             }
             alert("Ops! Tivemos um problema e estamos trabalhando nisso.")
@@ -46,9 +49,9 @@ export default function ChangeEntry() {
         <Container>
             <form onSubmit = {putEntry}>
                 <Text>Editar Entrada</Text>
-                <Input placeholder = "Valor" type = "text" name = "money" onChange = {
+                <Input placeholder = "Valor" type = "text" name = "money" value = {form.money? form.money:""} onChange = { 
                     event => {handleForm({name: event.target.name, value: event.target.value}, form, setForm)}}/>
-                <Input placeholder = "Descrição" type = "text" name = "description" onChange = {
+                <Input placeholder = "Descrição" type = "text" name = "description" value = {form.description? form.description:""} onChange = {
                     event => {handleForm({name: event.target.name, value: event.target.value}, form, setForm)}}/>
                 <Button type = "submit">Editar entrada</Button>
             </form>

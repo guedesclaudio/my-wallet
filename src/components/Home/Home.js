@@ -155,14 +155,14 @@ const TextDate = styled.p`
     color: #C6C6C6;
     margin-left: 10px;
 `
-const Description = styled(Date)`
+const Description = styled(TextDate)`
     color: #000000;
     margin-left: 20px;
     width: 100px;
     overflow-wrap: break-word;
     cursor: pointer;
 `
-const Money = styled(Date)`
+const Money = styled(TextDate)`
     color: ${props => props.color};
     padding-right: 10px;
     margin-left: 0px;
