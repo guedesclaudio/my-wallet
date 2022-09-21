@@ -1,7 +1,7 @@
 import axios from "axios"
 
 //const baseURL = "http://localhost:5000"
-const baseURL = "https://git.heroku.com/my-wallet-backend-api.git"
+const baseURL = "https://my-wallet-backend-api.herokuapp.com"
 
 function postSignIn(userLogin) {
     const promise = axios.post(`${baseURL}/signin`, userLogin)
