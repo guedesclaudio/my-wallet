@@ -32,10 +32,12 @@ function Move({
         if(!responseUser) {
             return
         }
-        
+
+        setTimeout(() => setCallApi(callApi+1), 250)
+
         try {
-            setCallApi(callApi+1)
             await deleteMove(id, config)
+            
         } catch (error) {
             const status = error.response.status
 
@@ -78,7 +80,6 @@ export default function Home() {
             const response = await getcashFlow(config)
             setCashFlow([...response.data[0].cashflow.reverse()])
             setTotal(response.data[1].total)
-            
         } catch (error) {
             console.log(error)
         }
